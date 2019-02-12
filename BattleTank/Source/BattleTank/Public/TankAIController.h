@@ -14,7 +14,10 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+private:
+	virtual void Tick(float) override;
+
 public:
 	virtual void BeginPlay() override;
 

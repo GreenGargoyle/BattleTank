@@ -18,8 +18,12 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 private:
 	UPROPERTY(EditAnywhere)
 	float crosshairXLocation = 0.5;
+
 	UPROPERTY(EditAnywhere)
 	float crosshairYLocation = 0.3333;
+
+	UPROPERTY(EditAnywhere)
+	float lineTraceRange = 1000000;
 
 	//Start the tank moving the barrell so that a shot would hit where the crosshair intersects the world.
 	void aimTowardsCrosshair();
@@ -28,6 +32,8 @@ private:
 	bool getSightRayHitLocation(FVector&) const;
 
 	bool getLookDirection(FVector2D, FVector&) const;
+
+	bool getLookVectorHitLocation(FVector, FVector&) const;
 
 public:
 	virtual void BeginPlay() override;
