@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
 // Sets default values for this component's properties
@@ -13,32 +16,44 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::setBarrelReference(UStaticMeshComponent* barrelToSet)
+void UTankAimingComponent::setBarrelReference(UTankBarrel* barrelToSet)
 {
 	barrel = barrelToSet;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
+void UTankAimingComponent::aimAt(FVector hitLocation, float launchSpeed)
 {
-	Super::BeginPlay();
+	if (!barrel) 
+	{
+		return;
+	}
 
-	// ...
-	
+	FVector outLaunchVelocity(0);
+	FVector startLocation = barrel->GetSocketLocation(FName("Projectile"));
+
+	//Calculate the outLaunchVelocity.
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		outLaunchVelocity,
+		startLocation,
+		hitLocation,
+		launchSpeed,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
+
+	if (bHaveAimSolution)
+	{
+		FVector aimDirection = outLaunchVelocity.GetSafeNormal();
+		moveBarrelTowards(aimDirection);
+	}
 }
 
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankAimingComponent::moveBarrelTowards(FVector aimDirection)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	//Work out difference between current barrel rotation and aimDirection.
+	FRotator barrelRotator = barrel->GetForwardVector().Rotation();
+	FRotator aimAsRotator = aimDirection.Rotation();
+	FRotator deltaRotator = aimAsRotator - barrelRotator;
 
-	// ...
-}
-
-void UTankAimingComponent::aimAt(FVector hitLocation)
-{
-	FString ourTankName = GetOwner()->GetName();
-	FVector barrelLocation = barrel->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from %s"), *ourTankName, *hitLocation.ToString(), *barrelLocation.ToString());
+	barrel->elevate(5.0f); //TODO - Remove magic number.
 }
