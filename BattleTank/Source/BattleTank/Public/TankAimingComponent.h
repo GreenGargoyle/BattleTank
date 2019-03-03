@@ -8,6 +8,7 @@
 
 
 //Forward declaration.
+class UTankTurret;
 class UTankBarrel; 
 
 //Holds barrel's properties and elevate method.
@@ -18,6 +19,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 private:
 	UTankBarrel* barrel = nullptr;
+	UTankTurret* turret = nullptr;
 
 	void moveBarrelTowards(FVector);
 
@@ -27,7 +29,7 @@ public:
 
 	void setBarrelReference(UTankBarrel*);
 
-	//TODO - Add setTurretReference.
+	void setTurretReference(UTankTurret*);
 
 	void aimAt(FVector, float);
 };

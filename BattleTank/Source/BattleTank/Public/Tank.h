@@ -6,7 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankBarrel;
 class UTankAimingComponent;
 
 UCLASS()
@@ -23,7 +22,7 @@ private:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float launchSpeed = 100000; //TODO: Find sensible default.
+	float launchSpeed = 4000.0f; 
 
 protected:
 	UTankAimingComponent* tankAimingComponent = nullptr;
@@ -35,5 +34,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void setBarrelReference(UTankBarrel* barrelToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void setTurretReference(UTankTurret* turretToSet);
+	
 	void aimAt(FVector hitLocation);
 };

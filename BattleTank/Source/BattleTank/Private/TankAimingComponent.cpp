@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
 #include "TankBarrel.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -12,14 +13,21 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; //TODO - Should this really tick?
+	PrimaryComponentTick.bCanEverTick = false; 
 
 	// ...
 }
 
 void UTankAimingComponent::setBarrelReference(UTankBarrel* barrelToSet)
 {
+	if (!barrelToSet) { return; }
 	barrel = barrelToSet;
+}
+
+void UTankAimingComponent::setTurretReference(UTankTurret* turretToSet)
+{
+	if (!turretToSet) { return; }
+	turret = turretToSet;
 }
 
 void UTankAimingComponent::aimAt(FVector hitLocation, float launchSpeed)
@@ -68,4 +76,5 @@ void UTankAimingComponent::moveBarrelTowards(FVector aimDirection)
 	FRotator deltaRotator = aimAsRotator - barrelRotator;
 
 	barrel->elevate(deltaRotator.Pitch); 
+	turret->rotate(deltaRotator.Yaw);
 }
