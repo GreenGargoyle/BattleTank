@@ -8,8 +8,6 @@ void  UTankTurret::rotate(float relativeSpeed)
 {
 	relativeSpeed = FMath::Clamp<float>(relativeSpeed, -1, 1);
 
-	UE_LOG(LogTemp, Warning, TEXT("Turret rotate called: %f"), relativeSpeed);
-
 	float rotationChange = relativeSpeed * maxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
 	float rotation = RelativeRotation.Yaw + rotationChange;
 

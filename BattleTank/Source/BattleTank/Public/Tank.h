@@ -38,4 +38,7 @@ public:
 	void setTurretReference(UTankTurret* turretToSet);
 	
 	void aimAt(FVector hitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void fire();
 };
