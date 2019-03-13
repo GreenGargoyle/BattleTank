@@ -22,14 +22,19 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> projectileBlueprint = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float launchSpeed = 4000.0f; 
 
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> projectileBlueprint = nullptr; 
+	UPROPERTY(EditDefaultsOnly, Category = Firing) //EditDefaultsOnly - Can only edit it on all tanks via the blueprint. Can't edit it for individual tanks at runtime.
+	float reloadTimeInSeconds = 3.0f;
 
 	//Local barrel reference for spawning pprojectile.
 	UTankBarrel* barrel = nullptr;
+
+	double lastFireTime = 0.0f;
 
 protected:
 	UTankAimingComponent* tankAimingComponent = nullptr;
