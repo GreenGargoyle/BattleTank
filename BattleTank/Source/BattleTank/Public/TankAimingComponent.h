@@ -12,7 +12,7 @@ class UTankTurret;
 class UTankBarrel; 
 
 //Holds barrel's properties and elevate method.
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
