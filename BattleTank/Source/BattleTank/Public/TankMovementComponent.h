@@ -26,6 +26,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void intendTurnRight(float throwParam);
+
+	//TODO - Check best protection.
+	virtual void RequestDirectMove(const FVector&, bool) override;
+
 	
 private:
 	UTankTrack* leftTrack = nullptr;
