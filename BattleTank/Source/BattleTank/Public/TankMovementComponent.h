@@ -27,11 +27,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void intendTurnRight(float throwParam);
 
-	//TODO - Check best protection.
-	virtual void RequestDirectMove(const FVector&, bool) override;
-
-	
 private:
 	UTankTrack* leftTrack = nullptr;
 	UTankTrack* rightTrack = nullptr;
+
+	//Called from the pathfinding logic by the AI Controllers.
+	virtual void RequestDirectMove(const FVector&, bool) override;
 };

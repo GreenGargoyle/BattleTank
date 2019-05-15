@@ -19,8 +19,6 @@ void UTankMovementComponent::intendMoveForward(float throwParam)
 
 	leftTrack->setThrottle(throwParam);
 	rightTrack->setThrottle(throwParam);
-
-	//TODO - Prevent double speed due to dual control use.
 }
 
 void UTankMovementComponent::intendTurnRight(float throwParam)
@@ -31,8 +29,6 @@ void UTankMovementComponent::intendTurnRight(float throwParam)
 
 	leftTrack->setThrottle(throwParam);
 	rightTrack->setThrottle(-throwParam);
-
-	//TODO - Prevent double speed due to dual control use.
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& moveVelocity, bool bForceMaxSpeed)
@@ -43,6 +39,8 @@ void UTankMovementComponent::RequestDirectMove(const FVector& moveVelocity, bool
 	FVector aiForwardIntention = moveVelocity.GetSafeNormal();
 
 	float forwardThrow = FVector::DotProduct(tankForward, aiForwardIntention);
-
 	intendMoveForward(forwardThrow);
+
+	float rightThrow = FVector::CrossProduct(tankForward, aiForwardIntention).Z;
+	intendTurnRight(rightThrow);
 }
