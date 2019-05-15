@@ -37,10 +37,12 @@ private:
 
 	bool getLookVectorHitLocation(FVector, FVector&) const;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	ATank* getControlledTank() const;
+
 public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float) override;
-
-	ATank* getControlledTank() const;
 };
