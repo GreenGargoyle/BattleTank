@@ -32,6 +32,8 @@ private:
 
 	double lastFireTime = 0.0f;
 
+	virtual void BeginPlay();
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* tankAimingComponent = nullptr;

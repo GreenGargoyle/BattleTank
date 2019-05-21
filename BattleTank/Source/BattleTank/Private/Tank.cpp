@@ -15,13 +15,23 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void ATank::aimAt(FVector hitLocation)
 {
+	if (!tankAimingComponent) { return; }
+
 	tankAimingComponent->aimAt(hitLocation, launchSpeed);
 }
 
 void ATank::fire()
 {
+	if (!barrel) { return; }
+
 	bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeInSeconds;
 
 	if (barrel && isReloaded)
