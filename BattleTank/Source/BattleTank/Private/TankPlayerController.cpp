@@ -23,6 +23,8 @@ void ATankPlayerController::Tick(float deltaTime)
 
 void ATankPlayerController::aimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; } //e.g. if not possessing.
+
 	UTankAimingComponent* aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(aimingComponent)) { return; }
 
